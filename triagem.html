@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Triagem Psicológica — Pedro Duarte, Psicólogo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #faf9f7; --surface: #ffffff; --surface2: #f3f2ef;
+  --text: #1a1917; --text-muted: #6b6a67; --text-hint: #9b9a97;
+  --border: rgba(26,25,23,0.11); --border-mid: rgba(26,25,23,0.22);
+  --accent: #1a1917;
+  --green: #3B6D11; --green-bg: #EAF3DE; --green-border: #C0DD97;
+  --amber: #854F0B; --amber-bg: #FAEEDA; --amber-border: #FAC775;
+  --red: #A32D2D; --red-bg: #FCEBEB; --red-border: #F7C1C1;
+  --blue-bg: #E6F1FB; --blue-text: #042C53; --blue-border: #B5D4F4;
+  --teal-bg: #E1F5EE; --teal-text: #085041; --teal-border: #9FE1CB;
+  --purple-bg: #EEEDFE; --purple-text: #26215C; --purple-border: #AFA9EC;
+  --radius: 10px; --radius-lg: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111110; --surface: #1c1c1a; --surface2: #252523;
+    --text: #f0ede8; --text-muted: #9b9a97; --text-hint: #6b6a67;
+    --border: rgba(240,237,232,0.1); --border-mid: rgba(240,237,232,0.2);
+    --accent: #f0ede8;
+    --green: #97C459; --green-bg: #173404; --green-border: #3B6D11;
+    --amber: #EF9F27; --amber-bg: #412402; --amber-border: #854F0B;
+    --red: #E24B4A; --red-bg: #501313; --red-border: #A32D2D;
+    --blue-bg: #042C53; --blue-text: #B5D4F4; --blue-border: #185FA5;
+    --teal-bg: #04342C; --teal-text: #9FE1CB; --teal-border: #0F6E56;
+    --purple-bg: #26215C; --purple-text: #CECBF6; --purple-border: #534AB7;
+  }
+}
+
+html { font-size: 16px; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; padding: 2rem 1rem 5rem;
+}
+.container { width: 100%; max-width: 720px; }
+
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--text-hint); text-decoration: none;
+  margin-bottom: 1.5rem; transition: color 0.15s;
+}
+.back-link:hover { color: var(--text-muted); }
+
+.site-header { text-align: center; margin-bottom: 2.5rem; }
+.site-header .eyebrow { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-hint); margin-bottom: 10px; }
+.site-header h1 { font-family: 'Lora', serif; font-size: 26px; font-weight: 400; line-height: 1.3; margin-bottom: 8px; }
+.site-header p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+/* Progress */
+.progress-wrap { margin-bottom: 1.5rem; }
+.progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-hint); margin-bottom: 7px; }
+.progress-track { height: 2px; background: var(--border); border-radius: 2px; }
+.progress-fill { height: 2px; background: var(--accent); border-radius: 2px; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); }
+
+/* Cards */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 2rem;
+  animation: slideUp 0.3s cubic-bezier(0.4,0,0.2,1);
+  margin-bottom: 1rem;
+}
+@keyframes slideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.section-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 1.25rem; padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--surface2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 500; flex-shrink: 0; color: var(--text-muted);
+}
+.section-title { font-family: 'Lora', serif; font-size: 17px; font-weight: 400; }
+.section-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+/* Form fields */
+.field { margin-bottom: 1.25rem; }
+.field label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
+.field input[type="text"],
+.field input[type="date"],
+.field select,
+.field textarea {
+  width: 100%; padding: 10px 13px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  transition: border-color 0.15s;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none; border-color: var(--border-mid);
+}
+.field textarea { min-height: 80px; resize: vertical; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+/* Scale items */
+.scale-item {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px 16px; margin-bottom: 8px;
+  transition: border-color 0.15s;
+}
+.scale-item:hover { border-color: var(--border-mid); }
+.scale-q { font-size: 13.5px; color: var(--text); margin-bottom: 10px; line-height: 1.5; }
+.scale-q small { display: block; font-size: 11.5px; color: var(--text-hint); margin-top: 2px; }
+.scale-opts { display: flex; gap: 6px; flex-wrap: wrap; }
+.scale-opt {
+  flex: 1; min-width: 60px;
+  padding: 7px 8px;
+  border: 1px solid var(--border); border-radius: 7px;
+  background: var(--surface); cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 12px;
+  color: var(--text-muted); text-align: center;
+  transition: all 0.15s; line-height: 1.3;
+}
+.scale-opt:hover { border-color: var(--border-mid); background: var(--surface2); color: var(--text); }
+.scale-opt.sel { border-color: var(--accent); background: var(--accent); color: var(--bg); }
+.scale-intro { font-size: 13px; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.6; font-style: italic; }
+
+/* Checkbox group */
+.check-group { display: flex; flex-direction: column; gap: 7px; }
+.check-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 13px; border: 1px solid var(--border);
+  border-radius: var(--radius); cursor: pointer; transition: all 0.15s;
+}
+.check-item:hover { border-color: var(--border-mid); background: var(--surface2); }
+.check-item input { margin-top: 2px; flex-shrink: 0; }
+.check-item span { font-size: 13.5px; line-height: 1.5; }
+
+/* Radio group */
+.radio-group { display: flex; flex-direction: column; gap: 7px; }
+.radio-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 13px; border: 1px solid var(--border);
+  border-radius: var(--radius); cursor: pointer; transition: all 0.15s;
+}
+.radio-item:hover { border-color: var(--border-mid); background: var(--surface2); }
+.radio-item input { flex-shrink: 0; }
+.radio-item span { font-size: 13.5px; }
+
+/* Nav */
+.nav { display: flex; gap: 8px; align-items: center; margin-top: 1.5rem; }
+.btn {
+  padding: 10px 20px; border-radius: var(--radius);
+  border: 1px solid var(--border-mid); background: transparent;
+  color: var(--text); font-family: 'DM Sans', sans-serif;
+  font-size: 14px; cursor: pointer; transition: background 0.15s, transform 0.1s;
+  text-decoration: none; display: inline-flex; align-items: center;
+}
+.btn:hover { background: var(--surface2); }
+.btn:active { transform: scale(0.97); }
+.btn.primary { background: var(--accent); color: var(--bg); border-color: var(--accent); margin-left: auto; }
+.btn.primary:hover { opacity: 0.85; background: var(--accent); }
+.btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* Score boxes */
+.score-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 1.25rem 0; }
+.score-box {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px; text-align: center;
+}
+.score-box .label { font-size: 11px; color: var(--text-hint); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
+.score-box .value { font-size: 26px; font-weight: 500; line-height: 1; margin-bottom: 4px; }
+.score-box .sev { font-size: 12px; color: var(--text-muted); }
+.score-green .value { color: var(--green); }
+.score-amber .value { color: var(--amber); }
+.score-red .value { color: var(--red); }
+
+/* Step level */
+.step-badge {
+  border-radius: var(--radius-lg); padding: 1.5rem;
+  text-align: center; margin: 1.25rem 0;
+}
+.step-badge .step-num { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.step-badge .step-title { font-family: 'Lora', serif; font-size: 20px; font-weight: 400; margin-bottom: 6px; }
+.step-badge .step-desc { font-size: 13px; line-height: 1.6; }
+.step-1 { background: var(--green-bg); border: 1px solid var(--green-border); }
+.step-1 .step-num { color: var(--green); }
+.step-1 .step-title { color: var(--green); }
+.step-1 .step-desc { color: var(--text-muted); }
+.step-2 { background: var(--amber-bg); border: 1px solid var(--amber-border); }
+.step-2 .step-num { color: var(--amber); }
+.step-2 .step-title { color: var(--amber); }
+.step-2 .step-desc { color: var(--text-muted); }
+.step-3 { background: var(--red-bg); border: 1px solid var(--red-border); }
+.step-3 .step-num { color: var(--red); }
+.step-3 .step-title { color: var(--red); }
+.step-3 .step-desc { color: var(--text-muted); }
+
+/* Info box */
+.info-box { border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 16px; margin-bottom: 10px; }
+.info-box h4 { font-size: 13px; font-weight: 500; margin-bottom: 5px; }
+.info-box p, .info-box ul { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+.info-box ul { padding-left: 1.2rem; }
+.info-box ul li { margin-bottom: 3px; }
+
+.flags-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.flag-tag {
+  font-size: 11.5px; padding: 4px 10px; border-radius: 6px;
+  background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border);
+}
+
+.disclaimer {
+  font-size: 11.5px; color: var(--text-hint);
+  border-top: 1px solid var(--border); padding-top: 1.25rem;
+  margin-top: 1.5rem; line-height: 1.7; font-style: italic; text-align: center;
+}
+
+.section-intro {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px 15px; margin-bottom: 1.25rem;
+  font-size: 13px; color: var(--text-muted); line-height: 1.6;
+}
+
+.trauma-gate {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px 16px; margin-bottom: 1rem;
+}
+.trauma-gate p { font-size: 13.5px; margin-bottom: 10px; line-height: 1.5; }
+
+@media (max-width: 540px) {
+  .card { padding: 1.5rem 1.25rem; }
+  .field-row, .field-row3 { grid-template-columns: 1fr; }
+  .score-grid { grid-template-columns: 1fr; }
+  .scale-opts { flex-direction: column; }
+  .scale-opt { text-align: left; min-width: unset; flex: unset; width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back-link" href="index.html">← Voltar</a>
+
+  <header class="site-header">
+    <p class="eyebrow">Pedro Duarte · Psicólogo · Avaliação Clínica</p>
+    <h1>Ficha de Triagem Psicológica</h1>
+    <p>Modelo <em>Stepped Care</em> — Avaliação padronizada para orientação do nível de cuidado</p>
+  </header>
+
+  <div class="progress-wrap" id="prog-wrap">
+    <div class="progress-meta"><span id="prog-sec"></span><span id="prog-ct"></span></div>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+
+  <div id="app"></div>
+</div>
+
+<script>
+// ── State
+const state = {
+  page: 0,
+  ident: {},
+  motivo: {},
+  hist: {},
+  phq9: new Array(9).fill(null),
+  gad7: new Array(7).fill(null),
+  trauma: false,
+  pcl5: new Array(20).fill(null),
+  risco: {},
+  obs: {}
+};
+
+const PAGES = ['intro','ident','motivo','hist','phq9','gad7','trauma_gate','pcl5','risco','resultado'];
+const TOTAL = PAGES.length;
+
+// ── Labels
+const PHQ9_Q = [
+  "Pouco interesse ou prazer em fazer as coisas?",
+  "Sentir-se deprimido(a), sem esperança ou vazio(a)?",
+  "Dificuldade em adormecer, manter o sono ou dormir demais?",
+  "Sentir-se cansado(a) ou com pouca energia?",
+  "Apetite diminuído ou aumentado?",
+  "Sentir-se mal consigo mesmo(a) — ou que é um fracasso ou que dececionou a família?",
+  "Dificuldade em concentrar-se nas coisas, como ler o jornal ou ver televisão?",
+  "Mover-se ou falar tão devagar que outras pessoas poderam notar? Ou o oposto — ficar tão agitado(a) que se move mais do que o habitual?",
+  "Pensamentos de que seria melhor estar morto(a) ou de se magoar de alguma forma?"
+];
+const GAD7_Q = [
+  "Sentir-se nervoso(a), ansioso(a) ou em alerta?",
+  "Não conseguir parar ou controlar as preocupações?",
+  "Preocupar-se demasiado com coisas diferentes?",
+  "Dificuldade em relaxar?",
+  "Ficar tão agitado(a) que é difícil ficar quieto(a)?",
+  "Ficar facilmente irritado(a) ou irritável?",
+  "Sentir medo como se algo terrível pudesse acontecer?"
+];
+const PCL5_Q = [
+  "Memórias repetidas, perturbadoras e indesejadas da experiência stressante?",
+  "Sonhos repetidos e perturbadores com a experiência stressante?",
+  "De repente sentir ou agir como se a experiência stressante estivesse de facto a acontecer novamente?",
+  "Sentir-se muito perturbado(a) quando algo lhe faz lembrar a experiência stressante?",
+  "Ter reações físicas intensas quando algo lhe faz lembrar a experiência stressante (ex: coração acelerado, dificuldade em respirar, suores)?",
+  "Evitar memórias, pensamentos ou sentimentos relacionados com a experiência stressante?",
+  "Evitar recordações externas da experiência stressante (ex: pessoas, lugares, conversas, atividades, objetos ou situações)?",
+  "Dificuldade em recordar partes importantes da experiência stressante?",
+  "Ter crenças negativas fortes sobre si mesmo(a), outras pessoas ou o mundo?",
+  "Culpar-se a si próprio(a) ou a outros pela experiência stressante ou pelo que aconteceu depois?",
+  "Ter sentimentos negativos intensos como medo, horror, raiva, culpa ou vergonha?",
+  "Perda de interesse em atividades que costumava gostar?",
+  "Sentir-se distante ou afastado(a) das outras pessoas?",
+  "Dificuldade em experienciar sentimentos positivos (ex: incapaz de sentir alegria ou sentimentos de amor)?",
+  "Comportamento irritável, crises de raiva ou agir de forma agressiva?",
+  "Correr demasiados riscos ou fazer coisas que lhe podem causar dano?",
+  "Estar em estado de 'alerta máximo', vigilante ou em guarda?",
+  "Sentir-se facilmente assustado(a)?",
+  "Dificuldade de concentração?",
+  "Dificuldade em adormecer ou manter o sono?"
+];
+const FREQ_OPTS = [
+  {v:0, l:"Nunca"},
+  {v:1, l:"Vários dias"},
+  {v:2, l:"Mais de\nmetade dos dias"},
+  {v:3, l:"Quase\ntodos os dias"}
+];
+const PCL_OPTS = [
+  {v:0, l:"Nada"},
+  {v:1, l:"Um pouco"},
+  {v:2, l:"Moderadamente"},
+  {v:3, l:"Bastante"},
+  {v:4, l:"Extremamente"}
+];
+
+// ── Scoring
+function phqScore()  { return state.phq9.reduce((s,v) => s + (v||0), 0); }
+function gad7Score() { return state.gad7.reduce((s,v) => s + (v||0), 0); }
+function pcl5Score() { return state.pcl5.reduce((s,v) => s + (v||0), 0); }
+
+function phqSev(s) {
+  if (s <= 4)  return {l:"Sem indicação clínica", cls:"green"};
+  if (s <= 9)  return {l:"Leve",                  cls:"green"};
+  if (s <= 14) return {l:"Moderada",              cls:"amber"};
+  if (s <= 19) return {l:"Moderada-severa",       cls:"amber"};
+  return               {l:"Severa",               cls:"red"};
+}
+function gadSev(s) {
+  if (s <= 4)  return {l:"Sem indicação clínica", cls:"green"};
+  if (s <= 9)  return {l:"Leve",                  cls:"green"};
+  if (s <= 14) return {l:"Moderada",              cls:"amber"};
+  return               {l:"Severa",               cls:"red"};
+}
+function pclSev(s) {
+  if (s < 31)  return {l:"Abaixo do limiar clínico", cls:"green"};
+  if (s <= 50) return {l:"Provável PTSD",             cls:"amber"};
+  return               {l:"PTSD severa provável",    cls:"red"};
+}
+
+function calcStep() {
+  const phq = phqScore(), gad = gad7Score(), pcl = state.trauma ? pcl5Score() : 0;
+  const risco9 = (state.phq9[8] || 0) >= 2;
+  const risc = state.risco;
+  const flagUrgent = risc.ideacao === 'sim' || risc.risco_vida === 'sim' || risco9;
+  const flagHigh = phq >= 15 || gad >= 15 || (state.trauma && pcl >= 33) ||
+                   risc.prev_internamento === 'sim' || risc.consumos_ativos === 'sim';
+  const flagMed = phq >= 10 || gad >= 10 || (state.trauma && pcl >= 28);
+
+  if (flagUrgent) return 3;
+  if (flagHigh) return 3;
+  if (flagMed) return 2;
+  return 1;
+}
+
+function getFlags() {
+  const flags = [];
+  const phq = phqScore(), gad = gad7Score();
+  if ((state.phq9[8]||0) >= 2) flags.push("Item 9 PHQ-9 positivo (risco de autolesão)");
+  if (phq >= 20) flags.push("PHQ-9 severo (≥20)");
+  if (gad >= 15) flags.push("GAD-7 severo (≥15)");
+  if (state.trauma && pcl5Score() >= 33) flags.push("PCL-5 acima do limiar clínico (≥31)");
+  if (state.risco.ideacao === 'sim') flags.push("Ideação suicida reportada");
+  if (state.risco.risco_vida === 'sim') flags.push("Risco imediato para a vida");
+  if (state.risco.prev_internamento === 'sim') flags.push("Histórico de internamento psiquiátrico");
+  if (state.risco.consumos_ativos === 'sim') flags.push("Consumos ativos de substâncias");
+  return flags;
+}
+
+// ── Render
+function render() {
+  const app = document.getElementById('app');
+  const pw  = document.getElementById('prog-wrap');
+  const p = PAGES[state.page];
+  const pct = (state.page / (TOTAL-1) * 100).toFixed(0);
+  const secLabels = {
+    intro:"Introdução", ident:"Identificação", motivo:"Motivo da consulta",
+    hist:"História clínica", phq9:"PHQ-9 · Depressão", gad7:"GAD-7 · Ansiedade",
+    trauma_gate:"Rastreio de Trauma", pcl5:"PCL-5 · PTSD", risco:"Avaliação de Risco",
+    resultado:"Resultado"
+  };
+  pw.style.display = p === 'intro' ? 'none' : 'block';
+  document.getElementById('prog-sec').textContent = secLabels[p] || '';
+  document.getElementById('prog-ct').textContent  = p !== 'intro' && p !== 'resultado'
+    ? (state.page) + ' / ' + (TOTAL-2) : '';
+  document.getElementById('prog-fill').style.width = pct + '%';
+
+  const fns = {
+    intro: renderIntro, ident: renderIdent, motivo: renderMotivo,
+    hist: renderHist, phq9: renderPHQ9, gad7: renderGAD7,
+    trauma_gate: renderTraumaGate, pcl5: renderPCL5,
+    risco: renderRisco, resultado: renderResultado
+  };
+  (fns[p] || renderIntro)(app);
+}
+
+function nav(dir) {
+  const p = PAGES[state.page];
+  if (dir > 0) {
+    // skip PCL5 if no trauma
+    if (p === 'trauma_gate' && !state.trauma) {
+      state.page += 2;
+    } else {
+      state.page++;
+    }
+  } else {
+    if (p === 'pcl5') { state.page -= 2; }
+    else { state.page = Math.max(0, state.page - 1); }
+  }
+  window.scrollTo(0,0);
+  render();
+}
+
+function setField(obj, key, val) { obj[key] = val; render(); }
+function setScale(arr, idx, val) { arr[idx] = val; render(); }
+
+// ── Intro
+function renderIntro(app) {
+  app.innerHTML = `
+  <div class="card">
+    <div class="section-intro" style="margin-bottom:1.5rem">
+      <strong>Instrução ao clínico:</strong> Esta ficha de triagem segue o modelo <em>Stepped Care</em>
+      e integra os instrumentos PHQ-9 (depressão), GAD-7 (ansiedade) e PCL-5 (trauma). O resultado
+      orienta o nível de intervenção recomendado (Nível 1, 2 ou 3).
+    </div>
+    <div style="text-align:center;padding:.5rem 0 1rem">
+      <div style="font-size:14px;color:var(--text-muted);line-height:1.75;max-width:480px;margin:0 auto 1.5rem">
+        Esta ficha é preenchida com o utente na primeira consulta de avaliação psicológica.
+        Os dados são confidenciais e utilizados exclusivamente para fins clínicos.
+      </div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:1.75rem">
+        <span style="font-size:12px;padding:5px 13px;border-radius:20px;border:1px solid var(--blue-border);background:var(--blue-bg);color:var(--blue-text)">PHQ-9</span>
+        <span style="font-size:12px;padding:5px 13px;border-radius:20px;border:1px solid var(--teal-border);background:var(--teal-bg);color:var(--teal-text)">GAD-7</span>
+        <span style="font-size:12px;padding:5px 13px;border-radius:20px;border:1px solid var(--purple-border);background:var(--purple-bg);color:var(--purple-text)">PCL-5</span>
+        <span style="font-size:12px;padding:5px 13px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted)">Stepped Care</span>
+      </div>
+      <button class="btn primary" onclick="nav(1)">Iniciar triagem →</button>
+    </div>
+  </div>`;
+}
+
+// ── Identification
+function renderIdent(app) {
+  const d = state.ident;
+  app.innerHTML = `
+  <div class="card">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">Identificação do utente</div>
+        <div class="section-subtitle">Dados sociodemográficos</div>
+      </div>
+    </div>
+    <div class="field"><label>Nome completo</label>
+      <input type="text" value="${d.nome||''}" oninput="state.ident.nome=this.value" placeholder="Nome do utente">
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Data de nascimento</label>
+        <input type="date" value="${d.dob||''}" oninput="state.ident.dob=this.value">
+      </div>
+      <div class="field"><label>Data da triagem</label>
+        <input type="date" value="${d.data_tri||new Date().toISOString().split('T')[0]}" oninput="state.ident.data_tri=this.value">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Sexo</label>
+        <select oninput="state.ident.sexo=this.value">
+          <option value="">Selecionar</option>
+          ${['Feminino','Masculino','Não-binário','Prefiro não indicar'].map(o=>`<option ${d.sexo===o?'selected':''}>${o}</option>`).join('')}
+        </select>
+      </div>
+      <div class="field"><label>Estado civil</label>
+        <select oninput="state.ident.estado_civil=this.value">
+          <option value="">Selecionar</option>
+          ${['Solteiro(a)','Casado(a)/União de facto','Divorciado(a)/Separado(a)','Viúvo(a)'].map(o=>`<option ${d.estado_civil===o?'selected':''}>${o}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Escolaridade</label>
+        <select oninput="state.ident.escolaridade=this.value">
+          <option value="">Selecionar</option>
+          ${['1.º Ciclo (4.º ano)','2.º Ciclo (6.º ano)','3.º Ciclo (9.º ano)','Ensino secundário','Licenciatura','Mestrado/Doutoramento'].map(o=>`<option ${d.escolaridade===o?'selected':''}>${o}</option>`).join('')}
+        </select>
+      </div>
+      <div class="field"><label>Situação profissional</label>
+        <select oninput="state.ident.situacao_prof=this.value">
+          <option value="">Selecionar</option>
+          ${['Empregado(a)','Desempregado(a)','Estudante','Reformado(a)','Baixa médica','Outro'].map(o=>`<option ${d.situacao_prof===o?'selected':''}>${o}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+    <div class="field"><label>Encaminhamento</label>
+      <select oninput="state.ident.encaminhamento=this.value">
+        <option value="">Selecionar</option>
+        ${['Iniciativa própria','Médico de família / MGF','Psiquiatria','Outro técnico de saúde','Serviço de urgência','Outra pessoa'].map(o=>`<option ${d.encaminhamento===o?'selected':''}>${o}</option>`).join('')}
+      </select>
+    </div>
+    <div class="nav">
+      <button class="btn" onclick="nav(-1)">← Anterior</button>
+      <button class="btn primary" onclick="nav(1)">Seguinte →</button>
+    </div>
+  </div>`;
+}
+
+// ── Motivo
+function renderMotivo(app) {
+  const d = state.motivo;
+  app.innerHTML = `
+  <div class="card">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">Motivo da consulta</div>
+        <div class="section-subtitle">Queixa principal e contexto</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Descrição da queixa principal (nas palavras do utente)</label>
+      <textarea oninput="state.motivo.queixa=this.value" placeholder="Descrever brevemente o motivo que trouxe o utente à consulta...">${d.queixa||''}</textarea>
+    </div>
+    <div class="field">
+      <label>Há quanto tempo tem estes sintomas?</label>
+      <select oninput="state.motivo.duracao=this.value">
+        <option value="">Selecionar</option>
+        ${['Menos de 2 semanas','2 a 4 semanas','1 a 3 meses','3 a 6 meses','6 a 12 meses','Mais de 1 ano'].map(o=>`<option ${d.duracao===o?'selected':''}>${o}</option>`).join('')}
+      </select>
+    </div>
+    <div class="field">
+      <label>Fatores desencadeantes identificados</label>
+      <textarea oninput="state.motivo.fatores=this.value" placeholder="Ex: perda de emprego, rutura amorosa, luto, doença...">${d.fatores||''}</textarea>
+    </div>
+    <div class="field">
+      <label>Área(s) de vida mais afetada(s)</label>
+      <div class="check-group">
+        ${['Trabalho/Escola','Relações familiares','Relações sociais/amizades','Relação amorosa','Saúde física','Sono','Alimentação','Autonomia e funcionamento diário'].map(a=>`
+        <label class="check-item">
+          <input type="checkbox" ${(d.areas||[]).includes(a)?'checked':''} onchange="toggleArea('${a}')">
+          <span>${a}</span>
+        </label>`).join('')}
+      </div>
+    </div>
+    <div class="nav">
+      <button class="btn" onclick="nav(-1)">← Anterior</button>
+      <button class="btn primary" onclick="nav(1)">Seguinte →</button>
+    </div>
+  </div>`;
+}
+
+function toggleArea(a) {
+  if (!state.motivo.areas) state.motivo.areas = [];
+  const i = state.motivo.areas.indexOf(a);
+  if (i >= 0) state.motivo.areas.splice(i,1); else state.motivo.areas.push(a);
+}
+
+// ── História
+function renderHist(app) {
+  const d = state.hist;
+  app.innerHTML = `
+  <div class="card">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">História clínica relevante</div>
+        <div class="section-subtitle">Antecedentes psicológicos e psiquiátricos</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Episódios anteriores de perturbação mental?</label>
+      <div class="radio-group">
+        ${['Não','Sim — episódio único','Sim — episódios recorrentes'].map(o=>`
+        <label class="radio-item">
+          <input type="radio" name="ep_ant" ${d.ep_anterior===o?'checked':''} onchange="state.hist.ep_anterior='${o}';render()">
+          <span>${o}</span>
+        </label>`).join('')}
+      </div>
+    </div>
+    <div class="field">
+      <label>Tratamento psicológico ou psiquiátrico anterior?</label>
+      <div class="radio-group">
+        ${['Não','Sim — psicoterapia','Sim — medicação psiquiátrica','Sim — ambos'].map(o=>`
+        <label class="radio-item">
+          <input type="radio" name="trat_ant" ${d.trat_anterior===o?'checked':''} onchange="state.hist.trat_anterior='${o}';render()">
+          <span>${o}</span>
+        </label>`).join('')}
+      </div>
+    </div>
+    <div class="field">
+      <label>Medicação psiquiátrica atual?</label>
+      <div class="radio-group">
+        ${['Não','Sim'].map(o=>`
+        <label class="radio-item">
+          <input type="radio" name="med_atual" ${d.med_atual===o?'checked':''} onchange="state.hist.med_atual='${o}';render()">
+          <span>${o}</span>
+        </label>`).join('')}
+      </div>
+    </div>
+    ${d.med_atual==='Sim'?`<div class="field"><label>Qual(is) medicação(ões)?</label>
+      <input type="text" value="${d.med_qual||''}" oninput="state.hist.med_qual=this.value" placeholder="Nome e dose...">
+    </div>`:''}
+    <div class="field">
+      <label>Doença física relevante?</label>
+      <textarea oninput="state.hist.doenca_fisica=this.value" placeholder="Se aplicável, indicar diagnóstico...">${d.doenca_fisica||''}</textarea>
+    </div>
+    <div class="nav">
+      <button class="btn" onclick="nav(-1)">← Anterior</button>
+      <button class="btn primary" onclick="nav(1)">Seguinte →</button>
+    </div>
+  </div>`;
+}
+
+// ── PHQ-9
+function renderPHQ9(app) {
+  const all = state.phq9.every(v => v !== null);
+  app.innerHTML = `
+  <div class="card">
+    <div class="section-header">
+      <div class="section-num" style="background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)">4</div>
+      <div>
+        <div class="section-title">PHQ-9 — Rastreio de Depressão</div>
+        <div class="section-subtitle">Patient Health Questionnaire-9 (Kroenke & Spitzer, 2002)</div>
+      </div>
+    </div>
+    <div class="section-intro">
+      <strong>Instrução:</strong> Nas últimas <strong>2 semanas</strong>, com que frequência foi incomodado(a) por algum dos seguintes problemas?
+    </div>
+    ${PHQ9_Q.map((q,i) => `
+    <div class="scale-item">
+      <div class="scale-q">${i+1}. ${q}${i===8?'<small>⚠️ Item de risco — explorar sempre se pontuado ≥1</small>':''}</div>
+      <div class="scale-opts">
+        ${FREQ_OPTS.map(o=>`
+        <button class="scale-opt ${state.phq9[i]===o.v?'sel':''}" onclick="setScale(state.phq9,${i},${o.v})">${o.l}</button>`).join('')}
+      </div>
+    </div>`).join('')}
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+      <span style="font-size:13px;color:var(--text-muted)">Pontuação parcial</span>
+      <span style="font-size:18px;font-weight:500">${state.phq9.reduce((s,v)=>s+(v||0),0)} / 27</span>
+    </div>
+    <div class="nav">
+      <button class="btn" onclick="nav(-1)">← Anterior</button>
+      <button class="btn primary" onclick="nav(1)" ${!all?'disabled':''}>Seguinte →</button>
+    </div>
+  </div>`;
+}
+
+// ── GAD-7
+function renderGAD7(app) {
+  const all = state.gad7.every(v => v !== null);
+  app.innerHTML = `
+  <div class="card">
+    <div class="section-header">
+      <div class="section-num" style="background:var(--teal-bg);color:var(--teal-text);border-color:var(--teal-border)">5</div>
+      <div>
+        <div class="section-title">GAD-7 — Rastreio de Ansiedade</div>
+        <div class="section-subtitle">Generalised Anxiety Disorder-7 (Spitzer et al., 2006)</div>
+      </div>
+    </div>
+    <div class="section-intro">
+      <strong>Instrução:</strong> Nas últimas <strong>2 semanas</strong>, com que frequência foi incomodado(a) por algum dos seguintes problemas?
+    </div>
+    ${GAD7_Q.map((q,i) => `
+    <div class="scale-item">
+      <div class="scale-q">${i+1}. ${q}</div>
+      <div class="scale-opts">
+        ${FREQ_OPTS.map(o=>`
+        <button class="scale-opt ${state.gad7[i]===o.v?'sel':''}" onclick="setScale(state.gad7,${i},${o.v})">${o.l}</button>`).join('')}
+      </div>
+    </div>`).join('')}
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+      <span style="font-size:13px;color:var(--text-muted)">Pontuação parcial</span>
+      <span style="font-size:18px;font-weight:500">${state.gad7.reduce((s,v)=>s+(v||0),0)} / 21</span>
+    </div>
+    <div class="nav">
+      <button class="btn" onclick="nav(-1)">← Anterior</button>
+      <button class="btn primary" onclick="nav(1)" ${!all?'disabled':''}>Seguinte →</button>
+    </div>
+  </div>`;
+}
+
+// ── Trauma gate
+function renderTraumaGate(app) {
+  app.innerHTML = `
+  <div class="card">
+    <div class="section-header">
+      <div class="section-num" style="background:var(--purple-bg);color:var(--purple-text);border-color:var(--purple-border)">6</div>
+      <div>
+        <div class="section-title">Rastreio de Trauma</div>
+        <div class="section-subtitle">Critério de aplicação do PCL-5</div>
+      </div>
+    </div>
+    <div class="trauma-gate">
+      <p style="font-weight:500">O utente experienciou ou testemunhou algum evento stressante grave ou ameaçador, como:</p>
+      <div class="check-group" style="margin-bottom:1rem">
+        ${['Acidente grave','Violência física ou sexual','Perda traumática súbita','Catástrofe natural ou guerra','Doença ou procedimento médico ameaçador de vida','Testemunha de morte ou ferimento grave','Outro evento traumático'].map(a=>`
+        <label class="check-item">
+          <input type="checkbox" ${(state.hist.eventos_traumaticos||[]).includes(a)?'checked':''} onchange="toggleTrauma('${a}')">
+          <span>${a}</span>
+        </label>`).join('')}
+      </div>
+    </div>
+    <div class="field">
+      <label>O utente apresenta sintomas que sugerem perturbação de stresse pós-traumático?</label>
+      <div class="radio-group">
+        <label class="radio-item">
+          <input type="radio" name="trauma_yn" ${state.trauma===true?'checked':''} onchange="state.trauma=true;render()">
+          <span>Sim — aplicar PCL-5</span>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="trauma_yn" ${state.trauma===false&&state.trauma!==null&&state.trauma!=='?'?'checked':''} onchange="state.trauma=false;render()">
+          <span>Não — avançar sem PCL-5</span>
+        </label>
+      </div>
+    </div>
+    <div class="nav">
+      <button class="btn" onclick="nav(-1)">← Anterior</button>
+      <button class="btn primary" onclick="nav(1)" ${state.trauma===null||state.trauma==='?'?'disabled':''}>
+        ${state.trauma ? 'Aplicar PCL-5 →' : 'Avançar →'}
+      </button>
+    </div>
+  </div>`;
+}
+
+function toggleTrauma(a) {
+  if (!state.hist.eventos_traumaticos) state.hist.eventos_traumaticos = [];
+  const i = state.hist.eventos_traumaticos.indexOf(a);
+  if (i >= 0) state.hist.eventos_traumaticos.splice(i,1); else state.hist.eventos_traumaticos.push(a);
+}
+
+// ── PCL-5
+function renderPCL5(app) {
+  const all = state.pcl5.every(v => v !== null);
+  app.innerHTML = `
+  <div class="card">
+    <div class="section-header">
+      <div class="section-num" style="background:var(--purple-bg);color:var(--purple-text);border-color:var(--purple-border)">7</div>
+      <div>
+        <div class="section-title">PCL-5 — Rastreio de PTSD</div>
+        <div class="section-subtitle">PTSD Checklist for DSM-5 (Weathers et al., 2013)</div>
+      </div>
+    </div>
+    <div class="section-intro">
+      <strong>Instrução:</strong> No último mês, em que medida foi incomodado(a) pelos seguintes problemas relacionados com a experiência stressante?
+    </div>
+    ${PCL5_Q.map((q,i) => `
+    <div class="scale-item">
+      <div class="scale-q">${i+1}. ${q}</div>
+      <div class="scale-opts">
+        ${PCL_OPTS.map(o=>`
+        <button class="scale-opt ${state.pcl5[i]===o.v?'sel':''}" onclick="setScale(state.pcl5,${i},${o.v})">${o.l}</button>`).join('')}
+      </div>
+    </div>`).join('')}
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+      <span style="font-size:13px;color:var(--text-muted)">Pontuação parcial</span>
+      <span style="font-size:18px;font-weight:500">${state.pcl5.reduce((s,v)=>s+(v||0),0)} / 80</span>
+    </div>
+    <div class="nav">
+      <button class="btn" onclick="nav(-1)">← Anterior</button>
+      <button class="btn primary" onclick="nav(1)" ${!all?'disabled':''}>Seguinte →</button>
+    </div>
+  </div>`;
+}
+
+// ── Risco
+function renderRisco(app) {
+  const d = state.risco;
+  const p = state.page === PAGES.indexOf('risco') ? 7 : 8;
+  app.innerHTML = `
+  <div class="card">
+    <div class="section-header">
+      <div class="section-num" style="background:var(--red-bg);color:var(--red);border-color:var(--red-border)">8</div>
+      <div>
+        <div class="section-title">Avaliação de Risco</div>
+        <div class="section-subtitle">Segurança e fatores de risco clínico</div>
+      </div>
+    </div>
+    <div class="section-intro" style="background:var(--red-bg);border-color:var(--red-border)">
+      ⚠️ Esta secção é de preenchimento obrigatório. Qualquer sinalização positiva deve ser explorada diretamente na entrevista clínica.
+    </div>
+
+    <div class="field">
+      <label>O utente reporta ideação suicida (atual ou recente)?</label>
+      <div class="radio-group">
+        ${[['nao','Não'],['pensamentos','Pensamentos passivos (não quero existir)'],['planos','Ideação com planos ou intenção'],['sim','Sim — risco ativo presente']].map(([v,l])=>`
+        <label class="radio-item">
+          <input type="radio" name="ideacao" ${d.ideacao===v?'checked':''} onchange="state.risco.ideacao='${v}';render()">
+          <span>${l}</span>
+        </label>`).join('')}
+      </div>
+    </div>
+    <div class="field">
+      <label>Há risco imediato para a vida (plano concreto, meios disponíveis)?</label>
+      <div class="radio-group">
+        ${[['nao','Não'],['sim','Sim — requer ação imediata']].map(([v,l])=>`
+        <label class="radio-item">
+          <input type="radio" name="risco_vida" ${d.risco_vida===v?'checked':''} onchange="state.risco.risco_vida='${v}';render()">
+          <span>${l}</span>
+        </label>`).join('')}
+      </div>
+    </div>
+    <div class="field">
+      <label>Historial de tentativas de suicídio ou autolesão?</label>
+      <div class="radio-group">
+        ${[['nao','Não'],['autolesao','Sim — autolesão sem intenção suicida'],['tentativa','Sim — tentativa de suicídio prévia']].map(([v,l])=>`
+        <label class="radio-item">
+          <input type="radio" name="hist_tentativa" ${d.hist_tentativa===v?'checked':''} onchange="state.risco.hist_tentativa='${v}';render()">
+          <span>${l}</span>
+        </label>`).join('')}
+      </div>
+    </div>
+    <div class="field">
+      <label>Internamento psiquiátrico prévio?</label>
+      <div class="radio-group">
+        ${[['nao','Não'],['sim','Sim']].map(([v,l])=>`
+        <label class="radio-item">
+          <input type="radio" name="prev_int" ${d.prev_internamento===v?'checked':''} onchange="state.risco.prev_internamento='${v}';render()">
+          <span>${l}</span>
+        </label>`).join('')}
+      </div>
+    </div>
+    <div class="field">
+      <label>Consumo ativo de substâncias (álcool, drogas)?</label>
+      <div class="radio-group">
+        ${[['nao','Não'],['ocasional','Sim — uso ocasional/recreativo'],['sim','Sim — uso problemático atual']].map(([v,l])=>`
+        <label class="radio-item">
+          <input type="radio" name="consumos" ${d.consumos_ativos===v?'checked':''} onchange="state.risco.consumos_ativos='${v}';render()">
+          <span>${l}</span>
+        </label>`).join('')}
+      </div>
+    </div>
+    <div class="field">
+      <label>Observações clínicas adicionais (risco, suporte social, fatores protetores)</label>
+      <textarea oninput="state.obs.notas=this.value" placeholder="Registar fatores protetores, rede de apoio, outros elementos relevantes...">${state.obs.notas||''}</textarea>
+    </div>
+    <div class="nav">
+      <button class="btn" onclick="nav(-1)">← Anterior</button>
+      <button class="btn primary" onclick="nav(1)" ${!d.ideacao||!d.risco_vida?'disabled':''}>Ver resultado →</button>
+    </div>
+  </div>`;
+}
+
+// ── Resultado
+function renderResultado(app) {
+  const phq = phqScore(), gad = gad7Score(), pcl = state.trauma ? pcl5Score() : null;
+  const ps = phqSev(phq), gs = gadSev(gad), cs = state.trauma ? pclSev(pcl) : null;
+  const step = calcStep();
+  const flags = getFlags();
+  const nome = state.ident.nome || 'Utente';
+  const data = state.ident.data_tri || new Date().toISOString().split('T')[0];
+
+  const stepInfo = {
+    1: {
+      cls: 'step-1',
+      label: 'Nível 1 — Cuidado Mínimo / Autogestão Apoiada',
+      desc: 'Sintomas leves sem critérios de urgência. Recomendado acompanhamento com monitorização regular, psicoeducação e estratégias de autogestão. Reavaliação em 4–6 semanas.',
+      rec: [
+        'Psicoeducação sobre ansiedade/depressão',
+        'Materiais de autoajuda baseados em TCC (bibliotherapy)',
+        'Intervenção mínima — 1 a 4 sessões de aconselhamento',
+        'Promoção de atividade física, sono e regulação emocional',
+        'Monitorização periódica com reavaliação com PHQ-9/GAD-7'
+      ]
+    },
+    2: {
+      cls: 'step-2',
+      label: 'Nível 2 — Intervenção Psicológica de Intensidade Moderada',
+      desc: 'Sintomas moderados com impacto funcional significativo. Indicado acompanhamento psicológico estruturado com avaliação de necessidade de medicação.',
+      rec: [
+        'Psicoterapia individual de intensidade moderada (TCC, ACT)',
+        'Avaliação para possível prescrição de medicação (SSRI/SNRI)',
+        'Programa estruturado de 8 a 16 sessões',
+        'Coordenação com médico de família / psiquiatria',
+        'Reavaliação com instrumentos padronizados em cada 4 sessões'
+      ]
+    },
+    3: {
+      cls: 'step-3',
+      label: 'Nível 3 — Intervenção Especializada / Urgente',
+      desc: 'Sintomas severos, risco clínico significativo ou critérios de urgência identificados. Requere intervenção especializada imediata e possível encaminhamento para psiquiatria.',
+      rec: [
+        'Avaliação psiquiátrica urgente ou encaminhamento para SUMC',
+        'Psicoterapia especializada e intensiva',
+        'Revisão e ajuste de medicação psiquiátrica',
+        'Plano de segurança documentado',
+        'Contacto com rede de suporte e família quando indicado',
+        'Monitorização semanal no período inicial'
+      ]
+    }
+  };
+  const si = stepInfo[step];
+
+  app.innerHTML = `
+  <div class="card">
+    <div class="section-header">
+      <div class="section-num" style="background:var(--accent);color:var(--bg)">✓</div>
+      <div>
+        <div class="section-title">Resultado da Triagem</div>
+        <div class="section-subtitle">${nome} · ${data}</div>
+      </div>
+    </div>
+
+    <div class="score-grid">
+      <div class="score-box score-${ps.cls}">
+        <div class="label">PHQ-9 · Depressão</div>
+        <div class="value">${phq}</div>
+        <div class="sev">${ps.l}</div>
+      </div>
+      <div class="score-box score-${gs.cls}">
+        <div class="label">GAD-7 · Ansiedade</div>
+        <div class="value">${gad}</div>
+        <div class="sev">${gs.l}</div>
+      </div>
+      ${state.trauma ? `
+      <div class="score-box score-${cs.cls}">
+        <div class="label">PCL-5 · PTSD</div>
+        <div class="value">${pcl}</div>
+        <div class="sev">${cs.l}</div>
+      </div>` : `
+      <div class="score-box">
+        <div class="label">PCL-5 · PTSD</div>
+        <div class="value" style="font-size:16px;color:var(--text-hint)">N/A</div>
+        <div class="sev">Não aplicado</div>
+      </div>`}
+    </div>
+
+    <div class="step-badge ${si.cls}">
+      <div class="step-num">Nível de Cuidado Recomendado</div>
+      <div class="step-title">${si.label}</div>
+      <div class="step-desc">${si.desc}</div>
+    </div>
+
+    ${flags.length > 0 ? `
+    <div class="info-box" style="background:var(--red-bg);border-color:var(--red-border)">
+      <h4 style="color:var(--red)">⚠️ Alertas clínicos identificados</h4>
+      <div class="flags-list">${flags.map(f=>`<span class="flag-tag">${f}</span>`).join('')}</div>
+    </div>` : ''}
+
+    <div class="info-box">
+      <h4>Recomendações clínicas — Nível ${step}</h4>
+      <ul>${si.rec.map(r=>`<li>${r}</li>`).join('')}</ul>
+    </div>
+
+    ${state.motivo.queixa ? `
+    <div class="info-box">
+      <h4>Queixa principal (palavras do utente)</h4>
+      <p>${state.motivo.queixa}</p>
+    </div>` : ''}
+
+    ${state.obs.notas ? `
+    <div class="info-box">
+      <h4>Notas clínicas</h4>
+      <p>${state.obs.notas}</p>
+    </div>` : ''}
+
+    <div class="info-box">
+      <h4>Resumo dos instrumentos aplicados</h4>
+      <p>PHQ-9: ${phq}/27 (${ps.l}) · GAD-7: ${gad}/21 (${gs.l})${state.trauma?` · PCL-5: ${pcl}/80 (${cs.l})':''}</p>
+    </div>
+
+    <div style="display:flex;justify-content:center;gap:8px;margin-top:1.25rem;flex-wrap:wrap">
+      <button class="btn" onclick="window.print()">Imprimir / Guardar PDF</button>
+      <button class="btn" onclick="resetAll()">← Nova triagem</button>
+      <a href="index.html" class="btn">Voltar ao início</a>
+    </div>
+
+    <div class="disclaimer">
+      Este resultado é um instrumento de suporte à decisão clínica e não substitui o juízo clínico do psicólogo.<br>
+      Pedro Duarte · Psicólogo · Ficha de triagem — uso clínico exclusivo.
+    </div>
+  </div>`;
+}
+
+function resetAll() {
+  state.page = 0; state.ident = {}; state.motivo = {}; state.hist = {};
+  state.phq9 = new Array(9).fill(null); state.gad7 = new Array(7).fill(null);
+  state.trauma = false; state.pcl5 = new Array(20).fill(null);
+  state.risco = {}; state.obs = {};
+  window.scrollTo(0,0); render();
+}
+
+// Init
+state.ident.data_tri = new Date().toISOString().split('T')[0];
+render();
+</script>
+</body>
+</html>
